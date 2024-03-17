@@ -1,28 +1,51 @@
+using TMPro;
 using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
 {
     [Header("Main")]
     [SerializeField] private GameObject cellPrefab;
+    [SerializeField] private GameObject columnPrefab;
 
     [Header("Grid Size")]
-    [SerializeField] private int width = 5;
-    [SerializeField] private int height = 5;
+    public int width = 5;
+    public int height = 5;
 
-    private void Start()
+    public GameObject[,] cells;
+    public GameObject[] columns;
+
+    private float cellSize;
+
+    private void Awake()
     {
-        RectTransform rectTransform = cellPrefab.GetComponent<RectTransform>();
-        float cellWidth = rectTransform.rect.width;
-        float cellHeight = rectTransform.rect.height;
+        GlobalVariables.cellSize = cellPrefab.GetComponent<RectTransform>().rect.size.x;
 
-        Vector2 initPosition = new Vector2(-cellWidth * ((width - 1) / 2), -cellHeight * ((height - 1) / 2));
+        cellSize = GlobalVariables.cellSize;
 
-        for (int y = 0; y < height; y++)
+        Vector2 initPosition = new Vector2(-cellSize * ((width - 1) / 2), -cellSize * ((height - 1) / 2));
+
+        cells = new GameObject[width, height];
+        columns = new GameObject[width];
+
+        int index = 0;
+
+        for (int x = 0; x < width; x++)
         {
-            for (int x = 0; x < width; x++)
+            GameObject column = Instantiate(columnPrefab, this.transform);
+            columns[x] = column;
+            Column columnScript = column.GetComponent<Column>();
+            columnScript.cells = new GameObject[height];
+
+            for (int y = 0; y < height; y++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector2(initPosition.x + x * cellWidth, initPosition.y + y * cellHeight), Quaternion.identity);
-                cell.transform.SetParent(this.transform, false);
+                GameObject cell = Instantiate(cellPrefab, new Vector2(initPosition.x + x * cellSize, initPosition.y + y * cellSize), Quaternion.identity);
+                cell.transform.SetParent(column.transform, false);
+
+                cells[x, y] = cell;
+                columnScript.cells[y] = cell;
+
+                cell.GetComponentInChildren<TMP_Text>().text = index.ToString();
+                index++;
             }
         }
     }
