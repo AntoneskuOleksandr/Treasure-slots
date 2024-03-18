@@ -12,7 +12,7 @@ public class GridGenerator : MonoBehaviour
     public int height = 5;
 
     public GameObject[,] cells;
-    public GameObject[] columns;
+    public Column[] columns;
 
     private float cellSize;
 
@@ -25,13 +25,13 @@ public class GridGenerator : MonoBehaviour
         Vector2 initPosition = new Vector2(-cellSize * ((width - 1) / 2), -cellSize * ((height - 1) / 2));
 
         cells = new GameObject[width, height];
-        columns = new GameObject[width];
+        columns = new Column[width];
 
         int index = 0;
 
         for (int x = 0; x < width; x++)
         {
-            GameObject column = Instantiate(columnPrefab, this.transform);
+            Column column = Instantiate(columnPrefab, this.transform).GetComponent<Column>();
             columns[x] = column;
             Column columnScript = column.GetComponent<Column>();
             columnScript.cells = new GameObject[height];

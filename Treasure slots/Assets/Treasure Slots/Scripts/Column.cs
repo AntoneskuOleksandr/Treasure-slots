@@ -8,28 +8,32 @@ public class Column : MonoBehaviour
     public int maxSpinSpeed = 10;
     public int minSpinTime = 3;
     public int maxSpinTime = 10;
+    public bool isSpining;
 
     private float cellSize;
     private float spinSpeed;
     private float spinTime;
 
+    private int lastCellIndex = 0;
+
     private void Start()
     {
-        spinSpeed = Random.Range(minSpinSpeed, maxSpinSpeed);
-        spinTime = Random.Range(minSpinTime, maxSpinTime);
-
-        Spin();
+        cellSize = GlobalVariables.cellSize;
     }
 
     public void Spin()
     {
-        cellSize = GlobalVariables.cellSize;
+        spinSpeed = Random.Range(minSpinSpeed, maxSpinSpeed);
+        spinTime = Random.Range(minSpinTime, maxSpinTime);
+
         StartCoroutine(SpinColumn());
     }
 
     private IEnumerator SpinColumn()
     {
-        int lastCellIndex = 0;
+        isSpining = true;
+        GameManager.Instance.ColumnsSpinningCount++;
+
         Vector3 targetPosition = transform.position;
         Vector3 initPosition = transform.position;
 
@@ -62,5 +66,8 @@ public class Column : MonoBehaviour
         }
 
         transform.position = targetPosition;
+
+        isSpining = false;
+        GameManager.Instance.ColumnsSpinningCount--;
     }
 }
