@@ -17,12 +17,13 @@ public class UIManager : MonoBehaviour
 
     public void OnStartRolling()
     {
+        gridGenerator.GenerateNewGrid();
+
         columns = gridGenerator.columns;
 
-        foreach(Column column in columns)
-        {
+        foreach (Column column in columns)
             column.Spin();
-        }
+
 
         rollSlotMachineButton.interactable = false;
     }

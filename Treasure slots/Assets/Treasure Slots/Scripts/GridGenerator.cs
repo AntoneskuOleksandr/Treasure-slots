@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class GridGenerator : MonoBehaviour
     public int width = 5;
     public int height = 5;
 
-    public GameObject[,] cells;
+    public Cell[,] cells;
     public Column[] columns;
 
     private float cellSize;
@@ -22,30 +23,43 @@ public class GridGenerator : MonoBehaviour
 
         cellSize = GlobalVariables.cellSize;
 
-        Vector2 initPosition = new Vector2(-cellSize * ((width - 1) / 2), -cellSize * ((height - 1) / 2));
-
-        cells = new GameObject[width, height];
+        cells = new Cell[width, height];
         columns = new Column[width];
 
-        int index = 0;
+        GenerateGrid();
+    }
+
+    private void GenerateGrid()
+    {
+        Vector2 initPosition = new Vector2(-cellSize * ((width - 1) / 2), -cellSize * ((height - 1) / 2));
 
         for (int x = 0; x < width; x++)
         {
             Column column = Instantiate(columnPrefab, this.transform).GetComponent<Column>();
             columns[x] = column;
-            Column columnScript = column.GetComponent<Column>();
-            columnScript.cells = new GameObject[height];
+            column.cells = new Cell[height];
 
             for (int y = 0; y < height; y++)
             {
-                GameObject cell = Instantiate(cellPrefab, new Vector2(initPosition.x + x * cellSize, initPosition.y + y * cellSize), Quaternion.identity);
+                Cell cell = Instantiate(cellPrefab, new Vector2(initPosition.x + x * cellSize, initPosition.y + y * cellSize),
+                    Quaternion.identity).GetComponent<Cell>();
                 cell.transform.SetParent(column.transform, false);
 
-                cells[x, y] = cell;
-                columnScript.cells[y] = cell;
+                cell.SetRandomSymbol();
 
-                cell.GetComponentInChildren<TMP_Text>().text = index.ToString();
-                index++;
+                cells[x, y] = cell;
+                column.cells[y] = cell;
+            }
+        }
+    }
+
+    public void GenerateNewGrid()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                cells[x, y].SetRandomSymbol();
             }
         }
     }

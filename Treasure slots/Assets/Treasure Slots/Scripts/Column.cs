@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Column : MonoBehaviour
 {
-    public GameObject[] cells;
+    public Cell[] cells;
     public int minSpinSpeed = 3;
     public int maxSpinSpeed = 10;
     public int minSpinTime = 3;
@@ -16,7 +16,7 @@ public class Column : MonoBehaviour
 
     private int lastCellIndex = 0;
 
-    private void Start()
+    private void Awake()
     {
         cellSize = GlobalVariables.cellSize;
     }
@@ -48,7 +48,7 @@ public class Column : MonoBehaviour
 
             transform.position = Vector3.Lerp(initPosition, targetPosition, Mathf.SmoothStep(0.0f, 1.0f, t));
 
-            GameObject lastCell = cells[lastCellIndex];
+            Cell lastCell = cells[lastCellIndex];
 
             if (lastCell.transform.position.y <= 360)
             {

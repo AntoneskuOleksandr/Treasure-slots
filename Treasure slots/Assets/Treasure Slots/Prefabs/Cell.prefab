@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3921007183462482859}
   - component: {fileID: 7844975379053075541}
   - component: {fileID: 1410530158015752310}
+  - component: {fileID: 7489322590910411843}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
@@ -67,7 +68,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -76,6 +77,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7489322590910411843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397652047499260052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a8e32b032b871648b1d4a2832ce68ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 3581993b586e8134f99fc948e48f3a2b, type: 3}
+  - {fileID: 21300000, guid: d5650042ed40a954eb2d568740e4c23d, type: 3}
+  - {fileID: 21300000, guid: 8598924396323374f9c625acb8549ae9, type: 3}
+  - {fileID: 21300000, guid: f08907505fc051941a770c804e4e0370, type: 3}
+  - {fileID: 21300000, guid: 155914c4843142b4f8319fb0e43b51aa, type: 3}
+  - {fileID: 21300000, guid: 754f812fd24dc02418ef35087e715e34, type: 3}
+  symbol: 0
 --- !u!1 &7955672930192513518
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7723491714841817894
 RectTransform:
   m_ObjectHideFlags: 0
