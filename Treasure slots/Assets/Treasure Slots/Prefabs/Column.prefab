@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cells: []
+  visibleCells: 
   minSpinSpeed: 15
   maxSpinSpeed: 30
-  minSpinTime: 3
-  maxSpinTime: 10
+  minSpinTime: 1
+  maxSpinTime: 2
   isSpining: 0

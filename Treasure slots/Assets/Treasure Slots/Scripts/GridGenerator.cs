@@ -31,7 +31,7 @@ public class GridGenerator : MonoBehaviour
 
     private void GenerateGrid()
     {
-        Vector2 initPosition = new Vector2(-cellSize * ((width - 1) / 2), -cellSize * ((height - 1) / 2));
+        Vector2 initPosition = new Vector2(-cellSize * ((width - 1) / 2), -cellSize * 2);
 
         for (int x = 0; x < width; x++)
         {
@@ -46,6 +46,8 @@ public class GridGenerator : MonoBehaviour
                 cell.transform.SetParent(column.transform, false);
 
                 cell.SetRandomSymbol();
+
+                cell.GetComponentInChildren<TMP_Text>().text = $"({x};{y})";
 
                 cells[x, y] = cell;
                 column.cells[y] = cell;

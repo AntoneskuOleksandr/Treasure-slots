@@ -15,7 +15,7 @@ public class Cell : MonoBehaviour
         Apple = 0,
         Pear = 1,
         Cherry = 2,
-        Banana = 3, 
+        Banana = 3,
         Lemon = 4,
         Grapes = 5
     }

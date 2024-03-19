@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GridGenerator gridGenerator;
+    [SerializeField] private CombinationManager combinationManager;
     [SerializeField] private Button rollSlotMachineButton;
 
     private Column[] columns;
@@ -31,5 +32,7 @@ public class UIManager : MonoBehaviour
     public void OnColumnsStoped()
     {
         rollSlotMachineButton.interactable = true;
+
+        combinationManager.CheckCombinations();
     }
 }
