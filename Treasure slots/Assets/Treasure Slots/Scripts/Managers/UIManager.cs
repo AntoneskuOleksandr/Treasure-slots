@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+
+    [Header("SlotMachine")]
+    [SerializeField] private GameObject slotGame;
+
     [Header("Components")]
     [SerializeField] private GridGenerator gridGenerator;
     [SerializeField] private CombinationManager combinationManager;
@@ -27,6 +31,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float betStep;
     [SerializeField] private float defaultBet;
     [SerializeField] private float minBet;
+
+    [Header("MiniGame")]
+    [SerializeField] private GameObject miniGame;
 
     private Column[] columns;
     private float betAmount;
@@ -74,7 +81,7 @@ public class UIManager : MonoBehaviour
 
     public void OnCombinationFound(float combinationValue)
     {
-        ChangeProgressBarValue(combinationValue);
+        ChangeProgressBarValue(combinationValue * betAmount / 5);
         moneyManager.Money += combinationValue;
     }
 
@@ -82,10 +89,16 @@ public class UIManager : MonoBehaviour
     {
         float newValue = value / maxProgressBarValue * 100;
 
-        if (newValue < 0) newValue = 0;
-        else if (newValue > 100) newValue = 100;
-
         progressBar.value += newValue;
+
+        Debug.Log(progressBar.value);
+
+        if (progressBar.value >= 100)
+        {
+            progressBar.value = 100;
+            ShowMiniGame();
+        }
+
         progressBarText.text = (progressBar.value).ToString("F1") + "%";
     }
 
@@ -120,5 +133,11 @@ public class UIManager : MonoBehaviour
         increaseBet.interactable = betAmount + betStep <= moneyManager.Money;
         descreaseBet.interactable = betAmount - betStep >= minBet;
         rollSlotMachineButton.interactable = moneyManager.Money >= betAmount;
+    }
+
+    private void ShowMiniGame()
+    {
+        slotGame.SetActive(false);
+        miniGame.SetActive(true);
     }
 }
