@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
             columnsSpinningCount = value;
 
             if (columnsSpinningCount == 0)
-                uiManager.OnColumnsStoped();
+                uiManager.OnColumnsStopped();
         }
     }
 

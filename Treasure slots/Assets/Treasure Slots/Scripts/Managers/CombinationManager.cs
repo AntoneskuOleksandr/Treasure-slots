@@ -3,6 +3,7 @@ using UnityEngine;
 public class CombinationManager : MonoBehaviour
 {
     [SerializeField] private GridGenerator gridGenerator;
+    [SerializeField] private UIManager UIManager;
 
     public int bonusCount = 0;
     public int combinationLength = 1;
@@ -33,6 +34,7 @@ public class CombinationManager : MonoBehaviour
                     {
                         CheckForBonusSymbols(combinationLength, y, firstSymbol, countedInCombination);
                         Debug.Log($"A combination of {combinationLength} characters {firstSymbol} on the line {y} with bonus: {bonusCount}");
+                        UIManager.OnCombinationFound(combinationLength + bonusCount);
                     }
 
                     combinationLength = 1;
@@ -44,6 +46,7 @@ public class CombinationManager : MonoBehaviour
             {
                 CheckForBonusSymbols(combinationLength, y, firstSymbol, countedInCombination);
                 Debug.Log($"A combination of {combinationLength} characters {firstSymbol} on the line {y} with bonus: {bonusCount}");
+                UIManager.OnCombinationFound(combinationLength + bonusCount);
             }
         }
     }
