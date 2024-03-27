@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-
     [Header("SlotMachine")]
     [SerializeField] private GameObject slotGame;
 
@@ -34,6 +33,8 @@ public class UIManager : MonoBehaviour
 
     [Header("MiniGame")]
     [SerializeField] private GameObject miniGame;
+    [SerializeField] private GameObject loseScreen;
+    [SerializeField] private GameObject winScreen;
 
     private Column[] columns;
     private float betAmount;
@@ -81,7 +82,7 @@ public class UIManager : MonoBehaviour
 
     public void OnCombinationFound(float combinationValue)
     {
-        ChangeProgressBarValue(combinationValue * betAmount / 5);
+        ChangeProgressBarValue(combinationValue * betAmount / defaultBet);
         moneyManager.Money += combinationValue;
     }
 
@@ -91,12 +92,10 @@ public class UIManager : MonoBehaviour
 
         progressBar.value += newValue;
 
-        Debug.Log(progressBar.value);
-
         if (progressBar.value >= 100)
         {
             progressBar.value = 100;
-            ShowMiniGame();
+            ShowMiniGame(true);
         }
 
         progressBarText.text = (progressBar.value).ToString("F1") + "%";
@@ -135,9 +134,31 @@ public class UIManager : MonoBehaviour
         rollSlotMachineButton.interactable = moneyManager.Money >= betAmount;
     }
 
-    private void ShowMiniGame()
+    public void ShowMiniGame(bool isShow)
     {
-        slotGame.SetActive(false);
-        miniGame.SetActive(true);
+        if (!isShow)
+        {
+            combinationManager.bonusCount = 0;
+            combinationManager.combinationLength = 1;
+            progressBar.value = 0;
+            progressBarText.text = 0 + "%";
+        }
+
+        miniGame.SetActive(isShow);
+        slotGame.SetActive(!isShow);
+
+        loseScreen.SetActive(false);
+        winScreen.SetActive(false);
+    }
+
+    public void ShowLoseScreen()
+    {
+        loseScreen.SetActive(true);
+    }
+
+    public void ShowWinScreen()
+    {
+        winScreen.SetActive(true);
+        moneyManager.Money += 1000;
     }
 }

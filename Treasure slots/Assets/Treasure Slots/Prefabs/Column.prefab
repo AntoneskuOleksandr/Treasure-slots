@@ -48,6 +48,6 @@ MonoBehaviour:
   visibleCells: 
   minSpinSpeed: 15
   maxSpinSpeed: 30
-  minSpinTime: 1
-  maxSpinTime: 2
+  minSpinTime: 3
+  maxSpinTime: 5
   isSpining: 0
