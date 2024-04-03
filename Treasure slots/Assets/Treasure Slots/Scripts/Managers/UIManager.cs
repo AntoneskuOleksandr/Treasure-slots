@@ -21,12 +21,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button rollSlotMachineButton;
 
     [Header("Texts")]
-    [SerializeField] private TMP_Text moneyValue;
+    [SerializeField] private TMP_Text moneyText;
 
     [Header("Bet")]
     [SerializeField] private TMP_Text betText;
-    [SerializeField] private Button descreaseBet;
-    [SerializeField] private Button increaseBet;
+    [SerializeField] private Button descreaseBetButton;
+    [SerializeField] private Button increaseBetButton;
+    [SerializeField] private Button minBetButton;
+    [SerializeField] private Button maxBetButton;
     [SerializeField] private float betStep;
     [SerializeField] private float defaultBet;
     [SerializeField] private float minBet;
@@ -46,8 +48,11 @@ public class UIManager : MonoBehaviour
         rollSlotMachineButton.onClick.AddListener(OnStartRolling);
         moneyManager.onMoneyChanged.AddListener(UpdateUI);
 
-        increaseBet.onClick.AddListener(IncreaseBet);
-        descreaseBet.onClick.AddListener(DecreaseBet);
+        increaseBetButton.onClick.AddListener(IncreaseBet);
+        descreaseBetButton.onClick.AddListener(DecreaseBet);
+
+        minBetButton.onClick.AddListener(SetMinBet);
+        maxBetButton.onClick.AddListener(SetMaxBet);
 
         progressBarText.text = 0 + "%";
         betAmount = defaultBet;
@@ -109,7 +114,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        moneyValue.text = moneyManager.Money.ToString() + "$";
+        moneyText.text = moneyManager.Money.ToString();
         UpdateButtons();
     }
 
@@ -133,10 +138,29 @@ public class UIManager : MonoBehaviour
         UpdateButtons();
     }
 
+    private void SetMinBet()
+    {
+        betAmount = minBet;
+        betText.text = betAmount.ToString();
+
+        UpdateButtons();
+    }
+
+    private void SetMaxBet()
+    {
+        if (moneyManager.Money >= minBet)
+        {
+            betAmount = moneyManager.Money;
+            betText.text = betAmount.ToString();
+        }
+
+        UpdateButtons();
+    }
+
     private void UpdateButtons()
     {
-        increaseBet.interactable = betAmount + betStep <= moneyManager.Money;
-        descreaseBet.interactable = betAmount - betStep >= minBet;
+        increaseBetButton.interactable = betAmount + betStep <= moneyManager.Money;
+        descreaseBetButton.interactable = betAmount - betStep >= minBet;
         rollSlotMachineButton.interactable = moneyManager.Money >= betAmount && !isSpinning;
     }
 
