@@ -2,10 +2,26 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioSource;
+    public static AudioManager Instance;
 
-    public void PlayOnButtonPressSound()
+    public AudioSource audioSource;
+    public AudioClip buttonClickSound;
+
+    void Awake()
     {
-        audioSource.PlayOneShot(audioSource.clip);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void PlayButtonClickSound()
+    {
+        audioSource.PlayOneShot(buttonClickSound);
     }
 }

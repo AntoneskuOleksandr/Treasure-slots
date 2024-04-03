@@ -38,6 +38,8 @@ public class UIManager : MonoBehaviour
 
     private Column[] columns;
     private float betAmount;
+    private float bettedBet;
+    private bool isSpinning;
 
     private void Awake()
     {
@@ -62,6 +64,9 @@ public class UIManager : MonoBehaviour
         }
 
         moneyManager.Money -= betAmount;
+        bettedBet = betAmount;
+
+        isSpinning = true;
 
         gridGenerator.GenerateNewGrid();
 
@@ -76,13 +81,14 @@ public class UIManager : MonoBehaviour
 
     public void OnColumnsStopped()
     {
+        isSpinning = false;
         combinationManager.CheckCombinations();
         UpdateButtons();
     }
 
     public void OnCombinationFound(float combinationValue)
     {
-        ChangeProgressBarValue(combinationValue * betAmount / defaultBet);
+        ChangeProgressBarValue(combinationValue * bettedBet / defaultBet);
         moneyManager.Money += combinationValue;
     }
 
@@ -131,7 +137,7 @@ public class UIManager : MonoBehaviour
     {
         increaseBet.interactable = betAmount + betStep <= moneyManager.Money;
         descreaseBet.interactable = betAmount - betStep >= minBet;
-        rollSlotMachineButton.interactable = moneyManager.Money >= betAmount;
+        rollSlotMachineButton.interactable = moneyManager.Money >= betAmount && !isSpinning;
     }
 
     public void ShowMiniGame(bool isShow)

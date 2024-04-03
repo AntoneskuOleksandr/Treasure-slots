@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MainMenuUIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject SettingsScrene;
+    [SerializeField] private GameObject settingsScrene;
+    [SerializeField] private GameObject settingButton;
 
     public void OpenSettings()
     {
-        SettingsScrene.SetActive(true);
+        settingsScrene.SetActive(true);
+        settingButton.SetActive(false);
     }
 
     public void CloseSettings()
     {
-        SettingsScrene.SetActive(false);
+        settingsScrene.SetActive(false);
+        settingButton.SetActive(true);
     }
 }

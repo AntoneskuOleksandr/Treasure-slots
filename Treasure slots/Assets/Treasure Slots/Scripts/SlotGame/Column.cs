@@ -54,6 +54,9 @@ public class Column : MonoBehaviour
 
             if (lastCell.transform.position.y < 360)
             {
+                //Debug.Log(lastCell.transform.position.y);
+                //Time.timeScale = 0f;
+
                 lastCell.transform.position = new Vector3(lastCell.transform.position.x, lastCell.transform.position.y + cellSize * cells.Length, 0);
 
                 if (lastVisibleCellIndex < cells.Length - 1)
