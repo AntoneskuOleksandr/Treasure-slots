@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     [Header("Progress Bar")]
     [SerializeField] private Slider progressBar;
     [SerializeField] private TMP_Text progressBarText;
+    [SerializeField] private Gradient gradient;
     [SerializeField] private float maxProgressBarValue;
 
     [Header("Buttons")]
@@ -54,9 +55,8 @@ public class UIManager : MonoBehaviour
         minBetButton.onClick.AddListener(SetMinBet);
         maxBetButton.onClick.AddListener(SetMaxBet);
 
-        progressBarText.text = 0 + "%";
-        betAmount = defaultBet;
-        betText.text = defaultBet.ToString();
+        SetDefaultValues();
+
         UpdateUI();
     }
 
@@ -97,20 +97,29 @@ public class UIManager : MonoBehaviour
         moneyManager.Money += combinationValue;
     }
 
-    private void ChangeProgressBarValue(float value)
+    private void ChangeProgressBarValue(float value, bool resetValue = false)
     {
-        float newValue = value / maxProgressBarValue * 100;
-
-        progressBar.value += newValue;
-
-        if (progressBar.value >= 100)
+        if (resetValue)
+            progressBar.value = 0;
+        else
         {
-            progressBar.value = 100;
-            ShowMiniGame(true);
+            float newValue = value / maxProgressBarValue * 100;
+
+            progressBar.value += newValue;
+
+            if (progressBar.value >= 100)
+            {
+                progressBar.value = 100;
+                ShowMiniGame(true);
+            }
         }
 
-        progressBarText.text = (progressBar.value).ToString("F1") + "%";
+        Color textColor = gradient.Evaluate(progressBar.value / 100);
+        progressBarText.color = textColor;
+
+        progressBarText.text = progressBar.value.ToString("F1") + "%";
     }
+
 
     private void UpdateUI()
     {
@@ -168,10 +177,7 @@ public class UIManager : MonoBehaviour
     {
         if (!isShow)
         {
-            combinationManager.bonusCount = 0;
-            combinationManager.combinationLength = 1;
-            progressBar.value = 0;
-            progressBarText.text = 0 + "%";
+            SetDefaultValues();
         }
 
         miniGame.SetActive(isShow);
@@ -190,5 +196,15 @@ public class UIManager : MonoBehaviour
     {
         winScreen.SetActive(true);
         moneyManager.Money += 1000;
+    }
+
+    private void SetDefaultValues()
+    {
+        ChangeProgressBarValue(0, true);
+        betAmount = defaultBet;
+        betText.text = defaultBet.ToString();
+
+        combinationManager.bonusCount = 0;
+        combinationManager.combinationLength = 1;
     }
 }

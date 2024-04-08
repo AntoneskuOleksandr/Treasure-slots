@@ -12,12 +12,12 @@ public class Cell : MonoBehaviour
 
     public enum Symbol
     {
-        Apple = 0,
-        Pear = 1,
-        Cherry = 2,
-        Banana = 3,
-        Lemon = 4,
-        Grapes = 5
+        AmethystScarab = 0,
+        EmeraldAnkh = 1,
+        LapisLazuliObelisk = 2,
+        RubyScarab = 3,
+        SunFire = 4,
+        TopazEyeOfHorus = 5
     }
 
     private void Awake()

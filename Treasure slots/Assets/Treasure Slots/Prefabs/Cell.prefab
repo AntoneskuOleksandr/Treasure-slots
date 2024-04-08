@@ -90,12 +90,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 3581993b586e8134f99fc948e48f3a2b, type: 3}
-  - {fileID: 21300000, guid: d5650042ed40a954eb2d568740e4c23d, type: 3}
-  - {fileID: 21300000, guid: 8598924396323374f9c625acb8549ae9, type: 3}
-  - {fileID: 21300000, guid: f08907505fc051941a770c804e4e0370, type: 3}
-  - {fileID: 21300000, guid: 155914c4843142b4f8319fb0e43b51aa, type: 3}
-  - {fileID: 21300000, guid: 754f812fd24dc02418ef35087e715e34, type: 3}
+  - {fileID: 21300000, guid: 49bd0e7988844a7448521ea469777a27, type: 3}
+  - {fileID: 21300000, guid: 825eae6529720e84eabb0e97fe4ebcc3, type: 3}
+  - {fileID: 21300000, guid: 04bab9ef271e71443a30509bc93058dd, type: 3}
+  - {fileID: 21300000, guid: c294149dd08dab6478d408aa11334ed9, type: 3}
+  - {fileID: 21300000, guid: 61c4a2a16b6ed35449bc07975453daae, type: 3}
+  - {fileID: 21300000, guid: 62a47269a51316a47ad2600dfb9c1d8f, type: 3}
   symbol: 0
 --- !u!1 &7955672930192513518
 GameObject:
