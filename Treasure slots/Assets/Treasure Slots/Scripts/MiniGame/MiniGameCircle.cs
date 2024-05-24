@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class MiniGameCircle : MonoBehaviour
@@ -9,6 +10,8 @@ public class MiniGameCircle : MonoBehaviour
     [SerializeField] private Image fillingCircle;
     [SerializeField] private float minSpinTime;
     [SerializeField] private float maxSpinTime;
+
+    public UnityEvent onCircleStoped;
 
     public void UpdateCircle(float newFillAmount)
     {
@@ -53,6 +56,8 @@ public class MiniGameCircle : MonoBehaviour
 
         float finalRotation = targetRotation - wheel.transform.eulerAngles.z;
         wheel.transform.Rotate(0, 0, finalRotation);
+
+        onCircleStoped.Invoke();
 
         if (!result)
             gameField.Lose();

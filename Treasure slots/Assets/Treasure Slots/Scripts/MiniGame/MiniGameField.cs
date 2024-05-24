@@ -11,18 +11,35 @@ public class MiniGameField : MonoBehaviour
     [SerializeField] private int chance = 90;
     private float cellSize;
     private BattleCell[,] cells;
+    private CanvasGroup canvasGroup;
 
     private void Awake()
     {
         cellSize = cellPrefab.GetComponent<RectTransform>().rect.size.x;
         cells = new BattleCell[fieldSize, fieldSize];
+        canvasGroup = GetComponent<CanvasGroup>();
+        GenerateField();
     }
 
     private void OnEnable()
     {
-        GenerateField();
         GenerateShip();
         gameCircle.UpdateCircle((float)chance / 100);
+        gameCircle.onCircleStoped.AddListener(() =>
+        {
+            canvasGroup.interactable = true;
+            canvasGroup.alpha = 1f;
+        });
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("OnDisable");
+        foreach (BattleCell cell in cells)
+        {
+            cell.SetDefault();
+            cell.secondSprite = seaMineSpite;
+        }
     }
 
     public void GenerateField()
@@ -53,7 +70,7 @@ public class MiniGameField : MonoBehaviour
         Debug.Log(x + " " + y);
     }
 
-    public void CellClicked(int x, int y)
+    public void OnCellClick(int x, int y)
     {
         if (cells[x, y].GetComponent<BattleCell>().IsShip)
         {
@@ -61,7 +78,6 @@ public class MiniGameField : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Промах!");
             gameCircle.UpdateCircle((float)chance / 100);
 
             bool isWin = Random.Range(0f, 100f) <= chance;
@@ -70,18 +86,21 @@ public class MiniGameField : MonoBehaviour
 
             gameCircle.SpinWheel(isWin);
             chance -= 10;
+
+            canvasGroup.interactable = false;
+            canvasGroup.alpha = 0.5f;
         }
     }
 
     public void Lose()
     {
-        uiManager.ShowLoseScreen();
+        uiManager.ShowMiniGameLoseScreen();
         chance = 90;
     }
 
     public void Win()
     {
-        uiManager.ShowWinScreen();
+        uiManager.ShowMiniGameWinScreen();
         chance = 90;
     }
 }

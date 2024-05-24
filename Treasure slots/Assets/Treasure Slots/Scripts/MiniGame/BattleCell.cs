@@ -8,20 +8,33 @@ public class BattleCell : MonoBehaviour
     public Sprite secondSprite;
 
     private Button button;
+    private Sprite defaultSprite;
+    private Image image;
+    private MiniGameField field;
 
     private void Awake()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(CellClicked);
+        button.onClick.AddListener(OnCellClick);
+
+        image = GetComponent<Image>();
+        defaultSprite = image.sprite;
+
+        field = GetComponentInParent<MiniGameField>();
     }
 
-    private void CellClicked()
+    private void OnCellClick()
     {
-        MiniGameField field = GetComponentInParent<MiniGameField>();
-
-        field.CellClicked(x, y);
+        field.OnCellClick(x, y);
 
         button.interactable = false;
-        GetComponent<Image>().sprite = secondSprite;
+        image.sprite = secondSprite;
+    }
+
+    public void SetDefault()
+    {
+        IsShip = false;
+        image.sprite = defaultSprite;
+        button.interactable = true;
     }
 }

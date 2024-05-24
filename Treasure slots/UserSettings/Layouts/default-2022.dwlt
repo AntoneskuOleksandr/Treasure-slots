@@ -154,7 +154,7 @@ MonoBehaviour:
   m_SerializedViewNames:
   - UnityEditor.DeviceSimulation.SimulatorWindow
   m_SerializedViewValues:
-  - E:\Work\Unity Projects\Treasure-slots\Treasure slots\Library\PlayModeViewStates\7bd922ed6a0764943befe98dd2c88483
+  - E:\Work\Unity Projects\Treasure-slots\Treasure slots\Library\PlayModeViewStates\98df5fa97dfaaa94b9869f351375e321
   m_PlayModeViewName: GameView
   m_ShowGizmos: 0
   m_TargetDisplay: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1

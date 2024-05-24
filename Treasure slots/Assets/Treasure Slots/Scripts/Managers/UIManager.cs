@@ -1,11 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Scenes")]
+    [SerializeField] private string MainMenu = "MainMenu";
+    [SerializeField] private Button mainMenuButton;
+
     [Header("SlotMachine")]
     [SerializeField] private GameObject slotGame;
+    [SerializeField] private GameObject winScreen;
 
     [Header("Components")]
     [SerializeField] private GridGenerator gridGenerator;
@@ -36,8 +42,8 @@ public class UIManager : MonoBehaviour
 
     [Header("MiniGame")]
     [SerializeField] private GameObject miniGame;
-    [SerializeField] private GameObject loseScreen;
-    [SerializeField] private GameObject winScreen;
+    [SerializeField] private GameObject miniGameLoseScreen;
+    [SerializeField] private GameObject miniGameWinScreen;
 
     private Column[] columns;
     private float betAmount;
@@ -54,6 +60,8 @@ public class UIManager : MonoBehaviour
 
         minBetButton.onClick.AddListener(SetMinBet);
         maxBetButton.onClick.AddListener(SetMaxBet);
+
+        mainMenuButton.onClick.AddListener(OpenMainMenu);
 
         SetDefaultValues();
 
@@ -93,8 +101,8 @@ public class UIManager : MonoBehaviour
 
     public void OnCombinationFound(float combinationValue)
     {
-        ChangeProgressBarValue(combinationValue * bettedBet / defaultBet);
         moneyManager.Money += combinationValue;
+        ChangeProgressBarValue(combinationValue * bettedBet / defaultBet);
     }
 
     private void ChangeProgressBarValue(float value, bool resetValue = false)
@@ -110,7 +118,7 @@ public class UIManager : MonoBehaviour
             if (progressBar.value >= 100)
             {
                 progressBar.value = 100;
-                ShowMiniGame(true);
+                ProgressBarFull();
             }
         }
 
@@ -118,6 +126,11 @@ public class UIManager : MonoBehaviour
         progressBarText.color = textColor;
 
         progressBarText.text = progressBar.value.ToString("F1") + "%";
+    }
+
+    private void ProgressBarFull()
+    {
+        ShowGameWinScreen(true);
     }
 
 
@@ -183,24 +196,35 @@ public class UIManager : MonoBehaviour
         miniGame.SetActive(isShow);
         slotGame.SetActive(!isShow);
 
-        loseScreen.SetActive(false);
-        winScreen.SetActive(false);
+        miniGameLoseScreen.SetActive(false);
+        miniGameWinScreen.SetActive(false);
     }
 
-    public void ShowLoseScreen()
+    public void ShowMiniGameLoseScreen()
     {
-        loseScreen.SetActive(true);
+        miniGameLoseScreen.SetActive(true);
     }
 
-    public void ShowWinScreen()
+    public void ShowMiniGameWinScreen()
     {
-        winScreen.SetActive(true);
+        miniGameWinScreen.SetActive(true);
         moneyManager.Money += 1000;
+    }
+
+    private void ShowGameWinScreen(bool isShow)
+    {
+        winScreen.SetActive(isShow);
+    }
+
+    public void OpenMainMenu()
+    {
+        SceneManager.LoadScene(MainMenu);
     }
 
     private void SetDefaultValues()
     {
         ChangeProgressBarValue(0, true);
+        ShowGameWinScreen(false);
         betAmount = defaultBet;
         betText.text = defaultBet.ToString();
 
